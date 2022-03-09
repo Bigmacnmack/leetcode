@@ -1,18 +1,15 @@
 class Solution {
 public:
+    ListNode* temp;
     bool isPalindrome(ListNode* head) {
-        stack<int> start;
-        queue<int> end;
-
-        ListNode* curr = head;
-        
-        while(curr != NULL){ start.push(curr->val); end.push(curr->val); curr = curr->next;}
-        
-        while(!start.empty() && !end.empty()){
-            if(start.top() != end.front()) return false;
-            start.pop(); end.pop();
-        }
-        
-        return true;
+        temp = head;
+        return check(head);
+    }
+    
+    bool check(ListNode* p) {
+        if (NULL == p) return true;
+        bool isPal = check(p->next) & (temp->val == p->val);
+        temp = temp->next;
+        return isPal;
     }
 };
